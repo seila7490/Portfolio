@@ -27,6 +27,8 @@ export default function InteractiveBook() {
   const reduced = useRef(false);
   const mobileMode = useRef(false);
   const wheelTime = useRef(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const touchTime = useRef(0);
   const goTo = useCallback((target: number) => {
     const next = boundedPage(target);
     const api = book.current?.pageFlip();
@@ -61,7 +63,9 @@ export default function InteractiveBook() {
       const width = mobile
         ? Math.min(430, entry.contentRect.width - 12)
         : Math.min(475, (entry.contentRect.width - 24) / 2);
-      const height = Math.min(entry.contentRect.height - 14, Math.max(490, width * 1.26));
+      const height = mobile
+        ? Math.min(entry.contentRect.height - 14, Math.max(560, width * 1.52))
+        : Math.min(entry.contentRect.height - 14, Math.max(490, width * 1.26));
       setSize({ width: Math.round(width), height: Math.round(height), mobile });
     });
     observer.observe(element);
@@ -85,14 +89,36 @@ export default function InteractiveBook() {
       element.style.setProperty("--pointer-x", "0deg");
       element.style.setProperty("--pointer-y", "0deg");
     };
+    const touchStartHandler = (e: TouchEvent) => {
+      const touch = e.changedTouches[0];
+      if (!touch || !mobileMode.current) return;
+      touchStart.current = { x: touch.clientX, y: touch.clientY };
+    };
+    const touchEndHandler = (e: TouchEvent) => {
+      const start = touchStart.current;
+      const touch = e.changedTouches[0];
+      touchStart.current = null;
+      if (!start || !touch || !mobileMode.current || showIndex) return;
+      const deltaX = touch.clientX - start.x;
+      const deltaY = touch.clientY - start.y;
+      if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY) * 1.15) return;
+      if (Date.now() - touchTime.current < 700) return;
+      touchTime.current = Date.now();
+      if (deltaX < 0) next();
+      else previous();
+    };
     element.addEventListener("wheel", scroll, { passive: false });
     element.addEventListener("pointermove", pointer);
     element.addEventListener("pointerleave", pointerLeave);
+    element.addEventListener("touchstart", touchStartHandler, { passive: true });
+    element.addEventListener("touchend", touchEndHandler, { passive: true });
     return () => {
       observer.disconnect();
       element.removeEventListener("wheel", scroll);
       element.removeEventListener("pointermove", pointer);
       element.removeEventListener("pointerleave", pointerLeave);
+      element.removeEventListener("touchstart", touchStartHandler);
+      element.removeEventListener("touchend", touchEndHandler);
     };
   }, [next, previous, showIndex]);
   useEffect(() => {
@@ -283,8 +309,8 @@ export default function InteractiveBook() {
               maxShadowOpacity={0.22}
               showCover
               mobileScrollSupport
-              clickEventForward
               useMouseEvents
+              clickEventForward
               swipeDistance={30}
               showPageCorners
               disableFlipByClick
@@ -333,6 +359,7 @@ export default function InteractiveBook() {
                 />
               ))}
             </div>
+            <span className="mobile-swipe-hint">deslize para virar</span>
           </div>
           <Button
             variant="ghost"

@@ -9,7 +9,10 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   vite: {
     server: {
-      allowedHosts: ["4173-imwhe9kut6arl8vyqoznp-b101db64.us5.manus.computer"],
+      allowedHosts: [
+        "4173-imwhe9kut6arl8vyqoznp-b101db64.us5.manus.computer",
+        "8080-imwhe9kut6arl8vyqoznp-b101db64.us5.manus.computer",
+      ],
     },
   },
   tanstackStart: {
