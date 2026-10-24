@@ -538,7 +538,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 @media (max-width: 760px) {
   .compliance-trigger {
     right: 10px;
-    bottom: 10px;
+    top: 10px;
+    bottom: auto;
     font-size: 9px;
     padding: 8px 10px;
   }

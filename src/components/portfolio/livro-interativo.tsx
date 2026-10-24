@@ -42,14 +42,14 @@ export default function InteractiveBook() {
     const api = book.current?.pageFlip();
     if (!api) return;
     if (api.getCurrentPageIndex() >= pageLabels.length - 1) return;
-    if (reduced.current)
+    if (reduced.current || mobileMode.current)
       api.turnToPage(boundedPage(api.getCurrentPageIndex() + (mobileMode.current ? 1 : 2)));
     else api.flipNext();
   }, []);
   const previous = useCallback(() => {
     const api = book.current?.pageFlip();
     if (!api) return;
-    if (reduced.current)
+    if (reduced.current || mobileMode.current)
       api.turnToPage(boundedPage(api.getCurrentPageIndex() - (mobileMode.current ? 1 : 2)));
     else api.flipPrev();
   }, []);
