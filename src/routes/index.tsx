@@ -9,6 +9,10 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Entre páginas — Sites com propósito | Portfólio web" },
       {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, viewport-fit=cover",
+      },
+      {
         name: "description",
         content:
           "Conheça minha trajetória, Time’s Book, Hair Plus e Scarin em um livro interativo.",

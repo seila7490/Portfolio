@@ -10,8 +10,8 @@ import desk from "@/assets/mesa-editorial.jpg";
 type FlipAPI = {
   flip: (page: number) => void;
   turnToPage: (page: number) => void;
-  flipNext: () => void;
-  flipPrev: () => void;
+  flipNext: (corner?: "top" | "bottom") => void;
+  flipPrev: (corner?: "top" | "bottom") => void;
   getCurrentPageIndex: () => number;
 };
 type FlipRef = { pageFlip: () => FlipAPI };
@@ -34,7 +34,9 @@ export default function InteractiveBook() {
     const next = boundedPage(target);
     const api = book.current?.pageFlip();
     if (!api) return;
-    if (reduced.current || mobileMode.current) {
+    if (!reduced.current && mobileMode.current && api.getCurrentPageIndex() === 0 && next === 1) {
+      api.flipNext();
+    } else if (reduced.current || mobileMode.current) {
       api.turnToPage(next);
       setPage(next);
       const url = new URL(window.location.href);
@@ -323,7 +325,7 @@ export default function InteractiveBook() {
               clickEventForward
               swipeDistance={30}
               showPageCorners
-              disableFlipByClick
+              disableFlipByClick={!size.mobile}
               onFlip={flip}
             >
               {pages}
