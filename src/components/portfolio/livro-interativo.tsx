@@ -56,8 +56,9 @@ export default function InteractiveBook() {
   const previous = useCallback(() => {
     const api = book.current?.pageFlip();
     if (!api) return;
-    if (reduced.current)
-      api.turnToPage(boundedPage(api.getCurrentPageIndex() - (mobileMode.current ? 1 : 2)));
+    const currentPage = api.getCurrentPageIndex();
+    if (currentPage <= 0) return;
+    if (reduced.current) api.turnToPage(boundedPage(currentPage - (mobileMode.current ? 1 : 2)));
     else if (mobileMode.current) api.flipPrev();
     else api.flipPrev();
   }, []);
@@ -337,7 +338,7 @@ export default function InteractiveBook() {
             aria-label="Página anterior"
             title="Página anterior"
             onClick={previous}
-            disabled={page === 0}
+            aria-disabled={page === 0}
           >
             <ArrowLeft />
           </Button>
