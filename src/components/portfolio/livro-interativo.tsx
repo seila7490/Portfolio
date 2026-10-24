@@ -44,7 +44,7 @@ export default function InteractiveBook() {
     if (api.getCurrentPageIndex() >= pageLabels.length - 1) return;
     if (reduced.current)
       api.turnToPage(boundedPage(api.getCurrentPageIndex() + (mobileMode.current ? 1 : 2)));
-    else if (mobileMode.current) api.flip(boundedPage(api.getCurrentPageIndex() + 1));
+    else if (mobileMode.current) api.flipNext();
     else api.flipNext();
   }, []);
   const previous = useCallback(() => {
@@ -52,7 +52,7 @@ export default function InteractiveBook() {
     if (!api) return;
     if (reduced.current)
       api.turnToPage(boundedPage(api.getCurrentPageIndex() - (mobileMode.current ? 1 : 2)));
-    else if (mobileMode.current) api.flip(boundedPage(api.getCurrentPageIndex() - 1));
+    else if (mobileMode.current) api.flipPrev();
     else api.flipPrev();
   }, []);
   useEffect(() => {
