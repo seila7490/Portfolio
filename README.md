@@ -77,3 +77,19 @@ Para um deploy típico:
 - Diretório de saída: definido pela configuração do TanStack Start
 
 Não envie a pasta `node_modules`, arquivos `.env`, credenciais ou artefatos gerados de build. O `.gitignore` já protege esses arquivos.
+
+## Segurança e privacidade
+
+O portfólio não possui login, banco de dados, API pública, checkout, upload, analytics ou anúncios. O servidor aplica headers HTTP de segurança, limita os métodos públicos a `GET` e `HEAD`, não habilita CORS e retorna uma página genérica em erros SSR. React escapa conteúdo dinâmico e não há SQL, sessões ou senhas neste projeto.
+
+A interface inclui uma central de privacidade com aviso de cookies, termos de uso, política de reembolso, direitos LGPD e formulário que apenas prepara um e-mail no navegador. Nenhuma mensagem é persistida pelo site. Leia [SECURITY.md](./SECURITY.md) e [CONFORMIDADE.md](./CONFORMIDADE.md) antes de fazer deploy. Os textos legais são modelos informativos e devem ser revisados para a operação real.
+
+Antes de publicar, rode:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm lint
+pnpm test
+pnpm audit
+pnpm build
+```

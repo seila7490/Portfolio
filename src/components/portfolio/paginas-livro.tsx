@@ -201,7 +201,7 @@ export function createBookPages(goTo: (page: number) => void) {
         <span className="project-year">2025</span>
       </div>
       <Button variant="chapter" className="project-visit" asChild>
-        <a href={projects[0].url} target="_blank" rel="noreferrer">
+        <a href={projects[0].url} target="_blank" rel="noopener noreferrer">
           Visitar projeto <ArrowUpRight />
         </a>
       </Button>
@@ -227,7 +227,7 @@ export function createBookPages(goTo: (page: number) => void) {
         <span className="project-year">2025</span>
       </div>
       <Button variant="chapter" className="project-visit" asChild>
-        <a href={projects[1].url} target="_blank" rel="noreferrer">
+        <a href={projects[1].url} target="_blank" rel="noopener noreferrer">
           Visitar projeto <ArrowUpRight />
         </a>
       </Button>
@@ -255,7 +255,7 @@ export function createBookPages(goTo: (page: number) => void) {
         <span className="project-year">2026</span>
       </div>
       <Button variant="chapter" className="project-visit" asChild>
-        <a href={projects[2].url} target="_blank" rel="noreferrer">
+        <a href={projects[2].url} target="_blank" rel="noopener noreferrer">
           Visitar projeto <ArrowUpRight />
         </a>
       </Button>

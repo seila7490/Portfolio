@@ -1,6 +1,7 @@
 import "./lib/captura-erros";
 
 import { consumeLastCapturedError } from "./lib/captura-erros";
+import { methodNotAllowedResponse, withSecurityHeaders } from "./lib/cabecalhos-seguranca";
 import { renderErrorPage } from "./lib/pagina-erro";
 
 type ServerEntry = {
@@ -46,16 +47,21 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return methodNotAllowedResponse();
+    }
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withSecurityHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      return withSecurityHeaders(
+        new Response(renderErrorPage(), {
+          status: 500,
+          headers: { "content-type": "text/html; charset=utf-8" },
+        }),
+      );
     }
   },
 };

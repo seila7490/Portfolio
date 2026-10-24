@@ -360,3 +360,206 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outli
 .pricing-extra { font-size: 9px; line-height: 1.4; }
 .pricing-extra strong { font-size: 8.5px; }
 @media (max-width:760px) { .pricing-section-title { font-size: 9px; }.pricing-section-title span { font-size: 7.5px; }.pricing-row { padding: 6px 0; }.pricing-row strong { font-size: 11px; }.pricing-row b { font-size: 8.5px; }.pricing-row p { font-size: 8.8px; }.pricing-extra { font-size: 8px; }.pricing-extra strong { font-size: 7.5px; } }
+/* Compliance center: visible, keyboard-friendly and free of tracking dependencies. */
+.compliance-trigger {
+  position: fixed;
+  right: 18px;
+  bottom: 16px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid rgba(247, 244, 232, 0.42);
+  border-radius: 999px;
+  background: rgba(31, 39, 32, 0.92);
+  color: #f7f4e8;
+  font: 10px var(--font-sans);
+  letter-spacing: 0.35px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+}
+.compliance-trigger:hover {
+  background: #354338;
+}
+.compliance-trigger:focus-visible,
+.compliance-tabs button:focus-visible,
+.inline-link:focus-visible,
+.lgpd-form input:focus-visible,
+.lgpd-form select:focus-visible,
+.lgpd-form textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.compliance-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(12, 17, 13, 0.72);
+  backdrop-filter: blur(8px);
+}
+.compliance-dialog-inner {
+  width: min(760px, 100%);
+  max-height: min(760px, calc(100svh - 36px));
+  overflow: auto;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  padding: clamp(20px, 4vw, 38px);
+}
+.compliance-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+.compliance-kicker {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--primary);
+  font: 9px var(--font-sans);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+.compliance-heading h2 {
+  margin: 0;
+  font: 500 clamp(30px, 5vw, 48px)/0.95 var(--font-editorial);
+}
+.compliance-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.compliance-tabs button {
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: 10px var(--font-sans);
+  cursor: pointer;
+}
+.compliance-tabs button:hover,
+.compliance-tabs button.is-active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.compliance-content {
+  padding-top: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.compliance-content h3 {
+  margin: 18px 0 5px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 600;
+}
+.compliance-content p {
+  margin: 0 0 11px;
+  color: color-mix(in oklch, var(--foreground) 88%, var(--muted-foreground));
+}
+.compliance-content .compliance-lead {
+  color: var(--foreground);
+  font: 500 20px/1.2 var(--font-editorial);
+}
+.compliance-note {
+  padding: 10px 12px;
+  border-left: 2px solid var(--primary);
+  font-size: 11px;
+}
+.inline-link {
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  cursor: pointer;
+}
+.security-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.lgpd-form {
+  display: grid;
+  gap: 7px;
+  margin-top: 15px;
+}
+.lgpd-form label:not(.lgpd-consent) {
+  color: var(--foreground);
+  font-size: 11px;
+  font-weight: 600;
+}
+.lgpd-form input:not([type="checkbox"]),
+.lgpd-form select,
+.lgpd-form textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 9px 10px;
+  font: 13px/1.4 var(--font-sans);
+}
+.lgpd-form textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+.lgpd-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 5px 0 8px;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.lgpd-consent input {
+  margin-top: 3px;
+  accent-color: var(--primary);
+}
+.form-success {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 12px;
+  background: color-mix(in oklch, var(--accent) 50%, transparent);
+  color: var(--foreground) !important;
+}
+@media (max-width: 760px) {
+  .compliance-trigger {
+    right: 10px;
+    bottom: 10px;
+    font-size: 9px;
+    padding: 8px 10px;
+  }
+  .compliance-dialog {
+    padding: 8px;
+  }
+  .compliance-dialog-inner {
+    max-height: calc(100svh - 16px);
+    padding: 18px 16px 24px;
+  }
+  .compliance-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .compliance-tabs button {
+    flex: 0 0 auto;
+  }
+  .compliance-content {
+    font-size: 12px;
+  }
+  .compliance-content .compliance-lead {
+    font-size: 18px;
+  }
+}

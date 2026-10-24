@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { ArrowLeft, ArrowRight, BookOpen, X, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ComplianceCenter, SecurityNotice } from "./central-conformidade";
 import { createBookPages } from "./paginas-livro";
 import { boundedPage, chapters, contactEmail, emailLink, pageLabels } from "@/lib/dados-portfolio";
 import desk from "@/assets/mesa-editorial.jpg";
@@ -384,7 +385,9 @@ export default function InteractiveBook() {
           {contactEmail}
           <ArrowUpRight size={12} />
         </a>
+        <SecurityNotice />
       </footer>
+      <ComplianceCenter />
       {showIndex && (
         <div className="chapter-dialog" onClick={() => setShowIndex(false)}>
           <div
