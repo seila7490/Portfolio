@@ -34,8 +34,14 @@ export default function InteractiveBook() {
     const next = boundedPage(target);
     const api = book.current?.pageFlip();
     if (!api) return;
-    if (reduced.current || mobileMode.current) api.turnToPage(next);
-    else api.flip(next);
+    if (reduced.current || mobileMode.current) {
+      api.turnToPage(next);
+      setPage(next);
+      const url = new URL(window.location.href);
+      url.searchParams.set("pagina", String(next));
+      window.history.replaceState(null, "", url);
+      document.title = `${pageLabels[next]} — Entre páginas | Portfólio web`;
+    } else api.flip(next);
     setShowIndex(false);
   }, []);
   const next = useCallback(() => {
